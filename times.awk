@@ -1,4 +1,4 @@
-#!/usr/bin/awk -f
+#!/usr/bin/env awk -f
 
 ## usage: month_to_num(month)
 ## converts human readable month to the decimal representation
@@ -116,7 +116,19 @@ function add_day_suff(day) {
   }
 }
 
-
+function etime2seconds(aTimeStr){
+    nf=split(aTimeStr, ts, ":");
+    if(nf== 2) {
+        print ts[1]*60 + ts[2]
+    }else if(nf==3) {
+        n=split(ts[1], a, "-");
+        if (n > 1) {
+            print ((a[1]*24+a[2])*60 + ts[2]) * 60 + ts[3];
+        }else {
+            print (ts[1]*60 + ts[2]) * 60 + ts[3];
+        }
+    }else print "Cannot support" |"cat 1>&2" ;
+}
 
 
 # Copyright Daniel Mills <dm@e36freak.com>
